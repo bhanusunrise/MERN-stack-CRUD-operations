@@ -1,19 +1,25 @@
 import React, { useState, FormEvent } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-interface CreateUserProps {}
-
-const CreateUser: React.FC<CreateUserProps> = () => {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [age, setAge] = useState<number | string>("");
+const CreateUser = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [age, setAge] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Ensure all data is collected and sent
+    const userData = { name, email, age: parseInt(age, 10) }; // Convert age to number
     axios
-      .post("http://localhost:3001/createUser", { name, email, age })
-      .then((result) => console.log(result))
-      .catch((err) => console.log(err));
+      .post("http://localhost:3001/createUser", userData)
+      .then((result) =>{ 
+        console.log(result);
+        navigate('/')
+      }
+    )
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -42,7 +48,7 @@ const CreateUser: React.FC<CreateUserProps> = () => {
           <div className="mb-2">
             <label htmlFor="age">Age</label>
             <input
-              type="text"
+              type="number" // Ensure it's a number input
               placeholder="Enter Age"
               className="form-control"
               onChange={(e) => setAge(e.target.value)}

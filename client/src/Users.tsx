@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface User {
-  Name: string;
-  Email: string;
-  Age: string;
+  name: string;
+  email: string;
+  age: string;
 }
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([
-    { Name: "Yousuf", Email: "yousuf@gmail.com", Age: "20" },
+    { name: "Yousuf", email: "yousuf@gmail.com", age: "20" },
   ]);
+
+  useEffect(() =>{
+    axios.get('http://localhost:3001')
+      .then(result => setUsers(result.data))
+      .catch(err => console.log(err))
+  }, [])
 
   return (
     <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
@@ -29,9 +36,9 @@ const Users: React.FC = () => {
           <tbody>
             {users.map((user, index) => (
               <tr key={index}>
-                <td>{user.Name}</td>
-                <td>{user.Email}</td>
-                <td>{user.Age}</td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.age}</td>
                 <td>
                   <Link to="/update" className = "btn btn-warning">Update</Link>
                   <button>Delete</button>
