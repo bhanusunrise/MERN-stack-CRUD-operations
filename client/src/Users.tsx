@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface User {
+  _id: any;
   name: string;
   email: string;
   age: string;
@@ -10,7 +11,10 @@ interface User {
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([
-    { name: "Yousuf", email: "yousuf@gmail.com", age: "20" },
+    {
+      name: "Yousuf", email: "yousuf@gmail.com", age: "20",
+      _id: undefined
+    },
   ]);
 
   useEffect(() =>{
@@ -40,7 +44,7 @@ const Users: React.FC = () => {
                 <td>{user.email}</td>
                 <td>{user.age}</td>
                 <td>
-                  <Link to="/update" className = "btn btn-warning">Update</Link>
+                  <Link to={`/update/${user._id}`} className = "btn btn-warning">Update</Link>
                   <button>Delete</button>
                 </td>
               </tr>

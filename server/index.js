@@ -16,6 +16,13 @@ app.get('/', (req, res) => {
     .catch(err => res.json(err))
 })
 
+app.get('/getUser/:id', (req, res) => {
+    const id = req.params.id;
+    UserModel.findById({_id:id})
+    .then(users => res.json(users))
+    .catch(err => res.json(err))
+})
+
 app.post("/createUser", (req, res) => {
   const { name, email, age } = req.body;
   if (!name || !email || !age) {
