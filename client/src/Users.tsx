@@ -33,7 +33,7 @@ const Users: React.FC = () => {
                 <td>{user.Email}</td>
                 <td>{user.Age}</td>
                 <td>
-                  <button>Edit</button>
+                  <Link to="/update" className = "btn btn-warning">Update</Link>
                   <button>Delete</button>
                 </td>
               </tr>
